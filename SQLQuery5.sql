@@ -87,6 +87,16 @@ inner join Mark_Details
 on User_Profile.User_id=Mark_Details.User_id;
 /*-----------------*/
 
+/* Task Date Only*/
+SELECT CONVERT(DATE, Created_Date) AS DateOnly
+FROM Mark_Details;
+
+
+
+
+
+
+
 
 
 
