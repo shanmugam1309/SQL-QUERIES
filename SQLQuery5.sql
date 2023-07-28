@@ -36,8 +36,10 @@ Modified_By varchar(50)
 )
 select* from User_Profile
 
-insert into User_Profile(Roll_number,First_Name,Last_Name,Email,Contact_No,Address,City,User_Name,User_Password,Create_Date,Modified_Date,Created_By)
-values(7877,'chandra','mohan','chandru007@gmail.com',9362812101,'vallular street','Puducherry','chandra123','chan@123',GETDATE(),GETDATE(),'Admin'),
+insert into User_Profile(Roll_number,First_Name,Last_Name,Email,Contact_No,Address,
+City,User_Name,User_Password,Create_Date,Modified_Date,Created_By)
+values
+(7877,'chandra','mohan','chandru007@gmail.com',9362812101,'vallular street','Puducherry','chandra123','chan@123',GETDATE(),GETDATE(),'Admin'),
 (5214,'arun','kumar','arun123@gmail.com',8201248523,'murugan nagar','tamilnadu','arun525','kum@525',GETDATE(),GETDATE(),'Admin'),
 (9632,'ravi', 'kumar','ravi098@gmail.com', 8601475231,'krishna nagar','puducherry','kumar343','ravi@232',GETDATE(),GETDATE(),'Admin'),
 (7412,'sakthi', 'mugesh', 'sakthi567@gmail.com', 9643075102,'kumaran street','tamilnadu','sakthi890','mug@098',GETDATE(),GETDATE(),'Admin'),
@@ -76,6 +78,8 @@ select* from User_Profile
 select * from Mark_Details
 /*------------*/
 
+SELECT SUBSTRING(First_Name, 2, 5) AS ExtractString
+FROM Mark_Details;
 
 /*Create View*/
 create view View_Query
@@ -88,8 +92,28 @@ on User_Profile.User_id=Mark_Details.User_id;
 /*-----------------*/
 
 /* Task Date Only*/
-SELECT CONVERT(DATE, Created_Date) AS DateOnly
-FROM Mark_Details;
+CREATE FUNCTION Fn_Date(@Date DATETIME)
+RETURNS DATE
+AS
+BEGIN
+    RETURN CONVERT(DATE, @Date)
+END;
+select dbo.Fn_Date ('2023-07-25 12:09:06.817') As ConvertedDate
+/*----------------*/
+
+/*Task Only Alphabets*/
+Create Function Fn_Alphabets (@Name varchar(50))
+Returns varchar(50)
+As
+Begin
+	WHILE PATINDEX('%[0-9]%', @Name) > 0
+	SET @Name = REPLACE(@Name, SUBSTRING(@Name, PATINDEX('%[^a-z]%', @Name), 1), '')
+	Return @Name;
+End;
+select dbo.Fn_Alphabets ('Sha2121nmu234345@gam123pria858n') As Name;
+
+
+
 
 
 
